@@ -10,6 +10,7 @@ public class SceneController : MonoBehaviour
 
     public string MessageInABottle = "Hey Guys";
     public string CurrentPoint = "Sample Scene";
+    public int CurrentDay = 1;
     public string NextScene = "Transition(WHAT)";
 
     private string storedData = "";

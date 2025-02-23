@@ -18,7 +18,7 @@ public class Car : MonoBehaviour
         sceneControllerScript = sceneControllerObj.GetComponent<SceneController>();
         if (sceneControllerScript.CurrentDay == 4)
         {
-            speed *= 1.5;
+            speed *= 1.5f;
         }
         rb.linearVelocity = new Vector2(speed, 0f);
         int spriteNum = UnityEngine.Random.Range(1, 3);

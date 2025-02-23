@@ -28,9 +28,9 @@ public class SceneController : MonoBehaviour
     public Sprite spreadsheetInstructionSprite;
     public Sprite emailInstructionSprite;
     public UnityEngine.UI.Image image;
-    public float fadeInDuration = 2f;  // Duration to fade in (seconds)
-    public float stayDuration = 1.5f;  // Duration to stay fully visible (seconds)
-    public float fadeOutDuration = 2f;  // Duration to fade out (seconds)
+    public float fadeInDuration = 3.5f;  // Duration to fade in (seconds)
+    public float stayDuration = 4f;  // Duration to stay fully visible (seconds)
+    public float fadeOutDuration = 3.5f;  // Duration to fade out (seconds)
 
     private void Awake()
     {

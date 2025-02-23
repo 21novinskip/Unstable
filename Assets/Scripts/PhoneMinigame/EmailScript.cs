@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class EmailScript : MonoBehaviour
 {
@@ -8,12 +10,19 @@ public class EmailScript : MonoBehaviour
     public float swipeAwayThreshold = 3f; // Distance required to swipe away
     public float swipeSpeed = 10f; // Speed at which it moves away
     private bool isSwipingAway = false;
+
     private Vector3 swipeTarget; // Target position for swiping away
     private EmailManager emailManager; // Reference to the email manager
 
     public TextMeshProUGUI titleText; // Reference to the TextMeshPro component
 
+
+
     public string SpamOrNah; // Variable to hold either "Spam" or "Important"
+
+
+        private PointerEventData pointerEventData;
+        private List<RaycastResult> raycastResults = new List<RaycastResult>();
 
     void Start()
     {
@@ -44,45 +53,69 @@ public class EmailScript : MonoBehaviour
 
     void Update()
     {
-        if (isSwipingAway)
+        if (isSwipingAway) 
         {
-            // Move towards the swipe-away target position
             transform.position = Vector3.Lerp(transform.position, swipeTarget, swipeSpeed * Time.deltaTime);
-
-            // Check if the email has moved off-screen
-            if (Mathf.Abs(transform.position.x - swipeTarget.x) < 0.1f)
+            
+            if (Mathf.Abs(transform.position.x - swipeTarget.x) < 0.1f) //if I've made it to theswipetarget
             {
-                emailManager.HandleSwipe(this.gameObject); // Call HandleSwipe in the manager to handle removal
+                emailManager.HandleSwipe(this.gameObject); //kill it yurt
+                isSwipingAway = false;
             }
             return;
         }
 
-        if (Input.GetMouseButton(0)) // Holding left mouse button
+        // if being dragged
+        if (Input.GetMouseButton(0) && IsMouseOverUI()) 
         {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Mathf.Abs(Camera.main.transform.position.z); // Use correct depth
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-            transform.position = new Vector3(mousePos.x, startPos.y, startPos.z); // Drag left/right
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+            transform.position = new Vector3(mousePos.x, startPos.y, startPos.z);
         }
-        else
+        else //if not being dragged
         {
-            float distanceDragged = transform.position.x - startPos.x; // How far did we move?
-
-            if (Mathf.Abs(distanceDragged) > swipeAwayThreshold) // Swiped far enough?
+            float distanceDragged = transform.position.x - startPos.x;
+            if (Mathf.Abs(distanceDragged) > swipeAwayThreshold) //if the distance dragged is above the threshhold
             {
-                // Decide swipe direction
-                float direction = Mathf.Sign(distanceDragged); // -1 (left) or 1 (right)
-                swipeTarget = startPos + new Vector3(direction * 200f, 0, 0); // Move it far offscreen
-                isSwipingAway = true; // Start swipe-away effect
+                if (!isSwipingAway) //if not swiping yet, start lol
+                {
+                    float direction = Mathf.Sign(distanceDragged); //figure out if going left or right
+                    swipeTarget = startPos + new Vector3(direction * swipeAwayThreshold*2f, 0, 0); //make a target
+                    isSwipingAway = true;
+                }
             }
-            else
+            else 
             {
-                // Return to center if not swiped far enough
-                transform.position = Vector3.Lerp(transform.position, startPos, returnSpeed * Time.deltaTime);
+                //if not being dragged and not beyond threshold,-
+                if (transform.position.x != startPos.x) //            - and not at home base, return to base
+                {
+                    // Only modify the X position, keep Y and Z the same
+                    transform.position = new Vector3(
+                        Mathf.Lerp(transform.position.x, startPos.x, returnSpeed * Time.deltaTime),  // Lerp the X position
+                        transform.position.y,  // Keep the Y position the same
+                        transform.position.z   // Keep the Z position the same
+                    );
+                }
             }
         }
     }
+
+    private bool IsMouseOverUI()
+    {
+        pointerEventData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        raycastResults.Clear();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+
+        foreach (var result in raycastResults)
+        {
+            if (result.gameObject == gameObject) // Ensure the UI element under the cursor is THIS one
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
 
 

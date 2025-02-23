@@ -9,9 +9,17 @@ public class Car : MonoBehaviour
     public Sprite carSprite1;
     public Sprite carSprite2;
     public Sprite carSprite3;
+    public GameObject sceneControllerObj;
+    private SceneController sceneControllerScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        sceneControllerObj = GameObject.Find("Scene Controller");
+        sceneControllerScript = sceneControllerObj.GetComponent<SceneController>();
+        if (sceneControllerScript.CurrentDay == 4)
+        {
+            speed *= 1.5;
+        }
         rb.linearVelocity = new Vector2(speed, 0f);
         int spriteNum = UnityEngine.Random.Range(1, 3);
         switch (spriteNum)

@@ -16,10 +16,12 @@ public class ButtonScript : MonoBehaviour
         if (IsDupe)
         {
             Debug.Log("You successfully clicked on a Dupe!");
+            Manager.GetComponent<ButtonManager>().CorrectButtons ++;
         }
         else
         {
             Debug.Log("You clicked on a button you should not have!");
+            Manager.GetComponent<ButtonManager>().Lose();
         }
     }
 

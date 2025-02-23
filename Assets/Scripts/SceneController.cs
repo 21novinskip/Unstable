@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 
 public class SceneController : MonoBehaviour
@@ -55,7 +56,11 @@ public class SceneController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.L))
         {
-            CurrentPoint = "Day 1 Intro";
+            if (CurrentPoint == "Sample Scene")
+            {
+                CurrentPoint = "Day 1 Intro";
+            }
+
             LoadScene(NextScene);
         }
     }
@@ -68,7 +73,9 @@ public class SceneController : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+
         SceneManager.LoadScene(sceneName);
+
     }
 
     public string GetStoredData()
@@ -79,12 +86,14 @@ public class SceneController : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         UnityEngine.Debug.Log("New Scene Loaded: " + scene.name);
+        print("CURRENT POINT: " + CurrentPoint);
         UnityEngine.Debug.Log(MessageInABottle);
 
         switch(CurrentPoint)
         {
             case "Day 1 Intro":
                 {
+                    CurrentDay = 1;
                     // Find ImageSpot in the whole scene by name
                     GameObject imageSpotObject = GameObject.Find("ImageSpot");
 
@@ -104,23 +113,33 @@ public class SceneController : MonoBehaviour
                         else { UnityEngine.Debug.LogError("Image component or Day1 sprite is missing."); }
                     }
                     else { UnityEngine.Debug.LogError("ImageSpot object not found in the scene."); }
+
                     break;
                 }
-            case "Day 1 Car":
 
+            case "Day 1 Car Game":
+                
 
-                StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 1 Spreadsheet Game"));
+                //StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 1 Spreadsheet Game"));
+                NextScene = "SpreadsheetMinigame";
+                print("SCENE AFTER CAR: " + NextScene);
                 break;
-            case "Day 1 Office":
+            case "Day 1 Office Game":
 
+                //StartCoroutine(FadeInAndOut("PhoneMinigame", "Day 1 Email Game"));
+
+                NextScene = "PhoneMinigame";
                 //to emails day 1 when done
                 break;
-            case "Day 1 Email":
-                StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 2 Intro"));
+            case "Day 1 Email Game":
+
+                //StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 2 Intro"));
+                NextScene = "Transition(WHAT)";
                 break;
             //day 2
             case "Day 2 Intro":
                 {
+                    CurrentDay = 2;
                     // Find ImageSpot in the whole scene by name
                     GameObject imageSpotObject = GameObject.Find("ImageSpot");
 
@@ -132,7 +151,7 @@ public class SceneController : MonoBehaviour
                         if (image != null && day1Sprite != null)
                         {
                             // Set the sprite to "Day1"
-                            image.sprite = day1Sprite;
+                            image.sprite = day2Sprite;
 
                             // Start the fade process
                             StartCoroutine(FadeInAndOut("CarMinigame", "Day 2 Car Game"));
@@ -142,21 +161,26 @@ public class SceneController : MonoBehaviour
                     else { UnityEngine.Debug.LogError("ImageSpot object not found in the scene."); }
                     break;
                 }
-            case "Day 2 Car":
+            case "Day 2 Car Game":
 
-
-                StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 2 Spreadsheet Game"));
+                NextScene = "SpreadsheetMinigame";
+                //StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 2 Spreadsheet Game"));
                 break;
-            case "Day 2 Office":
+            case "Day 2 Office Game":
 
+                NextScene = "PhoneMinigame";
+                //StartCoroutine(FadeInAndOut("PhoneMinigame", "Day 2 Email Game"));
                 //to emails day 2 when done
                 break;
-            case "Day 2 Email":
-                StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 3 Intro"));
+            case "Day 2 Email Game":
+
+                //StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 3 Intro"));
+                NextScene = "Transition(WHAT)";
                 break;
             //day 3
             case "Day 3 Intro":
                 {
+                    CurrentDay = 3;
                     // Find ImageSpot in the whole scene by name
                     GameObject imageSpotObject = GameObject.Find("ImageSpot");
 
@@ -178,21 +202,24 @@ public class SceneController : MonoBehaviour
                     else { UnityEngine.Debug.LogError("ImageSpot object not found in the scene."); }
                     break;
                 }
-            case "Day 3 Car":
+            case "Day 3 Car Game":
 
-
-                StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 3 Spreadsheet Game"));
+                NextScene = "SpreadsheetMinigame";
+                //StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 3 Spreadsheet Game"));
                 break;
-            case "Day 3 Office":
-
+            case "Day 3 Office Game":
+                NextScene = "PhoneMinigame";
+                StartCoroutine(FadeInAndOut("PhoneMinigame", "Day 1 Email Game"));
                 //to emails day 3 when done
                 break;
-            case "Day 3 Email":
-                StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 4 Intro"));
+            case "Day 3 Email Game":
+                //StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 4 Intro"));
+                NextScene = "Transition(WHAT)";
                 break;
             //day 4
             case "Day 4 Intro":
                 {
+                    CurrentDay = 4;
                     // Find ImageSpot in the whole scene by name
                     GameObject imageSpotObject = GameObject.Find("ImageSpot");
 
@@ -214,21 +241,24 @@ public class SceneController : MonoBehaviour
                     else { UnityEngine.Debug.LogError("ImageSpot object not found in the scene."); }
                     break;
                 }
-            case "Day 4 Car":
+            case "Day 4 Car Game":
 
-
-                StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 4 Spreadsheet Game"));
+                NextScene = "SpreadsheetMinigame";
+                //StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 4 Spreadsheet Game"));
                 break;
-            case "Day 4 Office":
+            case "Day 4 Office Game":
 
-                //to emails day 5 when done
+                NextScene = "PhoneMinigame";
+                //to emails day 4 when done
                 break;
-            case "Day 4 Email":
-                StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 5 Intro"));
+            case "Day 4 Email Game":
+                //StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 5 Intro"));
+                NextScene = "Transition(WHAT)";
                 break;
             //day 5 (FINAL DAY)
             case "Day 5 Intro":
                 {
+                    CurrentDay = 5;
                     // Find ImageSpot in the whole scene by name
                     GameObject imageSpotObject = GameObject.Find("ImageSpot");
 
@@ -250,17 +280,18 @@ public class SceneController : MonoBehaviour
                     else { UnityEngine.Debug.LogError("ImageSpot object not found in the scene."); }
                     break;
                 }
-            case "Day 5 Car":
+            case "Day 5 Car Game":
 
-
-                StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 5 Spreadsheet Game"));
+                NextScene = "SpreadsheetMinigame";
+                //StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 5 Spreadsheet Game"));
                 break;
-            case "Day 5 Office":
-
+            case "Day 5 Office Game":
+                NextScene = "PhoneMinigame";
                 //fade into email 5
                 break;
-            case "Day 5 Email":
+            case "Day 5 Email Game":
                 //idk, credits or somethin
+                NextScene = "Transition(WHAT)";
                 break;
             default:
                 break;
@@ -293,43 +324,46 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator FadeInAndOut(string NextName, string NextPoint)
     {
-        // Set the image to completely transparent immediately
-        Color startColor = image.color;
-        image.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
-
-        // Wait for the specified fade-in delay
-        yield return new WaitForSeconds(1f);
-
-        // Fade in (slowly increase alpha)
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeInDuration)
+        if (image != null)
         {
-            float alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeInDuration);
-            image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            // Set the image to completely transparent immediately
+
+            Color startColor = image.color;
+            image.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+
+            // Wait for the specified fade-in delay
+            yield return new WaitForSeconds(1f);
+
+            // Fade in (slowly increase alpha)
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeInDuration)
+            {
+                float alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeInDuration);
+                image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            // Ensure fully visible at the end of fade-in
+            image.color = new Color(startColor.r, startColor.g, startColor.b, 1f);
+
+            // Stay fully visible for the specified time
+            yield return new WaitForSeconds(stayDuration);
+
+            // Fade out (slowly decrease alpha)
+            elapsedTime = 0f;
+            while (elapsedTime < fadeOutDuration)
+            {
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeOutDuration);
+                image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            // Ensure fully transparent at the end of fade-out
+            image.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+
+            // Print a debug message once the whole process is complete
+            UnityEngine.Debug.Log("Image fading complete!");
         }
-        // Ensure fully visible at the end of fade-in
-        image.color = new Color(startColor.r, startColor.g, startColor.b, 1f);
-
-        // Stay fully visible for the specified time
-        yield return new WaitForSeconds(stayDuration);
-
-        // Fade out (slowly decrease alpha)
-        elapsedTime = 0f;
-        while (elapsedTime < fadeOutDuration)
-        {
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeOutDuration);
-            image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        // Ensure fully transparent at the end of fade-out
-        image.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
-
-        // Print a debug message once the whole process is complete
-        UnityEngine.Debug.Log("Image fading complete!");
-        
         CurrentPoint = NextPoint;
         LoadScene(NextName);
     }

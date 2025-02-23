@@ -11,6 +11,7 @@ public class CarSpawner : MonoBehaviour
     public Transform spawnPoint4;
     private Transform spawnPoint;
     public GameObject carPrefab;
+
     private float spawnTimer = 0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -20,9 +20,14 @@ public class ModifierHandler : MonoBehaviour
     private ChromaticAberration chromab;
     private LensDistortion lensdist;
     private int sign = 1;
+    public GameObject sceneControllerObj;
+    private SceneController sceneControllerScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        sceneControllerObj = GameObject.Find("Scene Controller");
+        sceneControllerScript = sceneControllerObj.GetComponent<SceneController>();
+        day = sceneControllerScript.CurrentDay;
         //get the modifiers from scenecontroller
         switch (day)
         {
@@ -53,7 +58,14 @@ public class ModifierHandler : MonoBehaviour
     }
     void FixedUpdate()
     {
-        GuysOnScreen();
+        if (day >= 2)
+        {
+            SleepyScreen();
+        }
+        if (day >= 3)
+        {
+            GuysOnScreen();
+        }
     }
     void SleepyScreen()
     {

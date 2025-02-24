@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class ButtonManager : MonoBehaviour
 {
-
     public float minigameTime;
     private float minigameTimer = 0f;
     public TMP_Text timerText;
@@ -24,6 +23,8 @@ public class ButtonManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Cursor.visible = false;
+
         Tasks_Completed = 0;
         ScoreText.text = "Duplicates found: " + Tasks_Completed.ToString();
         ResetButtons();

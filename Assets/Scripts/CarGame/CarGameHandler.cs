@@ -19,6 +19,8 @@ public class CarGameHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.visible = false;
+
         sceneControllerObj = GameObject.Find("Scene Controller");
         sceneControllerScript = sceneControllerObj.GetComponent<SceneController>();
 
@@ -31,7 +33,6 @@ public class CarGameHandler : MonoBehaviour
 
     void FixedUpdate()
     {
-        minigameTimer += Time.fixedDeltaTime;
         if (minigameTimer < 2f)
         {
             carInstructionsAlpha += 0.1f;
@@ -40,6 +41,11 @@ public class CarGameHandler : MonoBehaviour
         {
             carInstructionsAlpha -= 0.1f;
         }
+        else if (minigameTimer >= 4)
+        {
+            timerText.text = ((int)(35 - minigameTimer)).ToString();
+        }
+
         Color startColor = carInstructions.color;
         carInstructions.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Clamp(carInstructionsAlpha, 0f, 1f));
         if (minigameTimer > minigameTime)

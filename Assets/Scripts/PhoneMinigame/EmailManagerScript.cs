@@ -31,6 +31,8 @@ public class EmailManager : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
+
         sceneControllerObj = GameObject.Find("Scene Controller");
         sceneControllerScript = sceneControllerObj.GetComponent<SceneController>();
         switch (currentDay)
@@ -93,15 +95,17 @@ public class EmailManager : MonoBehaviour
     {
         minigameTimer += Time.fixedDeltaTime;
         //Debug.Log(minigameTimer);
-        timerText.text = ((int)(31 - minigameTimer)).ToString();
-
         if (minigameTimer < 2f)
         {
             carInstructionsAlpha += 0.1f;
         }
-        else
+        else if ((minigameTimer >=2f) && (minigameTimer < 4f))
         {
             carInstructionsAlpha -= 0.1f;
+        }
+        else if (minigameTimer >= 4)
+        {
+            timerText.text = ((int)(35 - minigameTimer)).ToString();
         }
         Color startColor = carInstructions.color;
         carInstructions.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Clamp(carInstructionsAlpha, 0f, 1f));

@@ -25,6 +25,10 @@ public class EmailManager : MonoBehaviour
     public float heightdif = 138;
     private int currentDay = 1;
     public int CurrentNumberOfEmails = 5;
+
+    public SpriteRenderer carInstructions;
+    private float carInstructionsAlpha = 0f;
+
     void Start()
     {
         sceneControllerObj = GameObject.Find("Scene Controller");
@@ -78,14 +82,29 @@ public class EmailManager : MonoBehaviour
         GameObject obj = GameObject.Find("Scene Controller");
         SceneController command = obj.GetComponent<SceneController>();
         StartCoroutine(command.WaitThirty());
+
+        Color startColor = carInstructions.color;
+        carInstructions.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+        carInstructionsAlpha = 0f;
     }
 
 
     void FixedUpdate()
     {
         minigameTimer += Time.fixedDeltaTime;
-        Debug.Log(minigameTimer);
+        //Debug.Log(minigameTimer);
         timerText.text = ((int)(31 - minigameTimer)).ToString();
+
+        if (minigameTimer < 2f)
+        {
+            carInstructionsAlpha += 0.1f;
+        }
+        else
+        {
+            carInstructionsAlpha -= 0.1f;
+        }
+        Color startColor = carInstructions.color;
+        carInstructions.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Clamp(carInstructionsAlpha, 0f, 1f));
     }
 
     void Update()

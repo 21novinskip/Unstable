@@ -15,6 +15,9 @@ public class ButtonManager : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public int Digits = 2;
 
+    public SpriteRenderer carInstructions;
+    private float carInstructionsAlpha = 0f;
+
     public Button[] buttons; // Array to hold all 20 buttons
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +30,10 @@ public class ButtonManager : MonoBehaviour
         GameObject obj = GameObject.Find("Scene Controller");
         SceneController command = obj.GetComponent<SceneController>();
         StartCoroutine(command.WaitThirty());
+
+        Color startColor = carInstructions.color;
+        carInstructions.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+        carInstructionsAlpha = 0f;
     }
 
     // Update is called once per frame
@@ -48,6 +55,17 @@ public class ButtonManager : MonoBehaviour
         minigameTimer += Time.fixedDeltaTime;
         //Debug.Log(minigameTimer);
         timerText.text = ((int)(31 - minigameTimer)).ToString();
+
+        if (minigameTimer < 2f)
+        {
+            carInstructionsAlpha += 0.1f;
+        }
+        else
+        {
+            carInstructionsAlpha -= 0.1f;
+        }
+        Color startColor = carInstructions.color;
+        carInstructions.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Clamp(carInstructionsAlpha, 0f, 1f));
     }
 
     void ResetButtons()

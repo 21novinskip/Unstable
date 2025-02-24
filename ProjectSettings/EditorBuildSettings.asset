@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PhoneMinigame.unity
     guid: d271e6acab31ab24499a79088d6a34ea
+  - enabled: 1
+    path: Assets/Scenes/DialogueScene.unity
+    guid: 9f5f0572eb0747e4f9ff9eb6a907cb04
+  - enabled: 1
+    path: Assets/Scenes/EndScreen.unity
+    guid: 8cdc4ef6c01285b4e84287916677ecbd
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

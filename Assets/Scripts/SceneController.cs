@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using static System.Net.Mime.MediaTypeNames;
-using System.Diagnostics;
+
 using System.Runtime.InteropServices;
 
 
@@ -12,9 +12,10 @@ public class SceneController : MonoBehaviour
     public static SceneController Instance;
 
     public string MessageInABottle = "Hey Guys";
-    public string CurrentPoint = "Sample Scene";
+    public string CurrentPoint = "Day 1 Intro";
     public int CurrentDay = 1;
     public string NextScene = "Transition(WHAT)";
+    public string NextPoint = "";
 
     private string storedData = "";
 
@@ -56,12 +57,7 @@ public class SceneController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.L))
         {
-            if (CurrentPoint == "Sample Scene")
-            {
-                CurrentPoint = "Day 1 Intro";
-            }
-
-            LoadScene(NextScene);
+            LoadSceneUnderstood();
         }
     }
 
@@ -77,6 +73,11 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(sceneName);
 
     }
+    public void LoadSceneUnderstood()
+    {
+        CurrentPoint = NextPoint;
+        SceneManager.LoadScene(NextScene);
+    }
 
     public string GetStoredData()
     {
@@ -85,7 +86,8 @@ public class SceneController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        UnityEngine.Debug.Log("New Scene Loaded: " + scene.name);
+        Debug.Log("Current point is: " + CurrentPoint);
+        //Debug.Log("New Scene Loaded: " + scene.name);
         print("CURRENT POINT: " + CurrentPoint);
         UnityEngine.Debug.Log(MessageInABottle);
 
@@ -93,6 +95,9 @@ public class SceneController : MonoBehaviour
         {
             case "Day 1 Intro":
                 {
+                    NextScene = "SampleScene";
+                    NextPoint = "Day 1 Dialogue 1";
+
                     CurrentDay = 1;
                     // Find ImageSpot in the whole scene by name
                     GameObject imageSpotObject = GameObject.Find("ImageSpot");
@@ -108,7 +113,7 @@ public class SceneController : MonoBehaviour
                             image.sprite = day1Sprite;
 
                             // Start the fade process
-                            StartCoroutine(FadeInAndOut("CarMinigame", "Day 1 Car Game"));
+                            StartCoroutine(FadeInAndOut(NextScene, NextPoint));
                         }
                         else { UnityEngine.Debug.LogError("Image component or Day1 sprite is missing."); }
                     }
@@ -117,24 +122,58 @@ public class SceneController : MonoBehaviour
                     break;
                 }
 
-            case "Day 1 Car Game":
-                
 
-                //StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 1 Spreadsheet Game"));
-                NextScene = "SpreadsheetMinigame";
+            case "Day 1 Dialogue 1":
+                GameObject obj = GameObject.Find("DTBoss1");
+                DialogueTrigger dialogueTrigger = obj.GetComponent<DialogueTrigger>();
+                dialogueTrigger.TriggerDialogue();
+
+                NextScene = "CarMinigame";
+                NextPoint = "Day 1 Car Game";
                 print("SCENE AFTER CAR: " + NextScene);
                 break;
+
+            case "Day 1 Car Game":
+                //StartCoroutine(FadeInAndOut("SpreadsheetMinigame", "Day 1 Spreadsheet Game"));
+                NextScene = "SampleScene";
+                NextPoint = "Day 1 Dialogue 2";
+                print("SCENE AFTER CAR: " + NextScene);
+                break;
+
+
+            case "Day 1 Dialogue 2":
+                Debug.Log("Made it to Dialogue 2");
+                GameObject obj2 = GameObject.Find("DTCoworker1");
+                DialogueTrigger dialogueTrigger2 = obj2.GetComponent<DialogueTrigger>();
+                dialogueTrigger2.TriggerDialogue();
+
+                NextScene = "SpreadsheetMinigame";
+                NextPoint = "Day 1 Office Game";
+                print("SCENE AFTER CAR: " + NextScene);
+                break;
+
             case "Day 1 Office Game":
-
                 //StartCoroutine(FadeInAndOut("PhoneMinigame", "Day 1 Email Game"));
-
-                NextScene = "PhoneMinigame";
+                NextScene = "SampleScene";
+                NextPoint = "Day 1 Dialogue 3";
                 //to emails day 1 when done
                 break;
-            case "Day 1 Email Game":
+
+            case "Day 1 Dialogue 3":
+                //StartCoroutine(FadeInAndOut("PhoneMinigame", "Day 1 Email Game"));
+                NextScene = "PhoneMinigame";
+                NextPoint = "Day 1 Phone";
+                GameObject obj3 = GameObject.Find("DTGirlfriend1");
+                DialogueTrigger dialogueTrigger3 = obj3.GetComponent<DialogueTrigger>();
+                dialogueTrigger3.TriggerDialogue();
+                //to emails day 1 when done
+                break;
+
+            case "Day 1 Phone":
 
                 //StartCoroutine(FadeInAndOut("Transition(WHAT)", "Day 2 Intro"));
-                NextScene = "Transition(WHAT)";
+                NextScene = "EndScreen";
+                NextPoint = "End";
                 break;
             //day 2
             case "Day 2 Intro":
@@ -320,6 +359,20 @@ public class SceneController : MonoBehaviour
             }
             else{Debug.LogError("ImageSpot object not found in the scene.");}
         }*/
+    }
+
+    public void NextToCurrent()
+    {
+        CurrentPoint = NextPoint;
+    }
+
+    public IEnumerator WaitThirty()
+    {
+        // Wait for 30 seconds
+        yield return new WaitForSeconds(30f);
+
+        // Debug message after 30 seconds
+        LoadSceneUnderstood();
     }
 
     private IEnumerator FadeInAndOut(string NextName, string NextPoint)

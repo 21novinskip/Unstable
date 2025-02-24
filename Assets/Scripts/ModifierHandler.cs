@@ -110,7 +110,7 @@ public class ModifierHandler : MonoBehaviour
 
     void OnDestroy()
     {
-        vignette.intensity.SetValue((new UnityEngine.Rendering.FloatParameter(0)));
+        vignette.intensity.SetValue(new UnityEngine.Rendering.FloatParameter(0));
         chromab.intensity.SetValue(new UnityEngine.Rendering.FloatParameter(0));
         lensdist.intensity.SetValue(new UnityEngine.Rendering.FloatParameter(0));
     }
@@ -121,5 +121,7 @@ public class ModifierHandler : MonoBehaviour
 
         return midpoint + amplitude * Mathf.Sin(time * speed);
     }
+
+    
 
 }

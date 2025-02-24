@@ -28,10 +28,7 @@ public class CarGameHandler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     void FixedUpdate()
     {
         minigameTimer += Time.fixedDeltaTime;
@@ -53,7 +50,7 @@ public class CarGameHandler : MonoBehaviour
             if (minigameTimer > minigameTime + 5)
             {
                 print("SCENE TO LOAD: " + sceneControllerScript.NextScene);
-                sceneControllerScript.LoadScene(sceneControllerScript.NextScene);
+                sceneControllerScript.LoadSceneUnderstood();
             }
         }
         else

@@ -290,6 +290,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 388c8b9c6913b4642883d5b186537478, type: 3}
     - target: {fileID: 8095750530980808751, guid: cf2684c9887b1944fadf01363a71060d, type: 3}
+      propertyPath: CurrentPoint
+      value: Day 1 Intro
+      objectReference: {fileID: 0}
+    - target: {fileID: 8095750530980808751, guid: cf2684c9887b1944fadf01363a71060d, type: 3}
       propertyPath: driveInstructionSprite
       value: 
       objectReference: {fileID: 21300000, guid: cae6ac5fbfc0a964ca739f56d461c4b4, type: 3}

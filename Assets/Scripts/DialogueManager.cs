@@ -93,6 +93,9 @@ public class DialogueManager : MonoBehaviour
         {
             Speaker.SetActive(false);
         }
+        GameObject obj = GameObject.Find("Scene Controller");
+        SceneController command = obj.GetComponent<SceneController>();
+        command.LoadSceneUnderstood();
     }
 
     IEnumerator DMNext()

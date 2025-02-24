@@ -18,6 +18,10 @@ public class ButtonManager : MonoBehaviour
         Tasks_Completed = 0;
         ScoreText.text = Tasks_Completed.ToString();
         ResetButtons();
+
+        GameObject obj = GameObject.Find("Scene Controller");
+        SceneController command = obj.GetComponent<SceneController>();
+        StartCoroutine(command.WaitThirty());
     }
 
     // Update is called once per frame

@@ -21,7 +21,7 @@ public class ButtonManager : MonoBehaviour
     void Start()
     {
         Tasks_Completed = 0;
-        ScoreText.text = Tasks_Completed.ToString();
+        ScoreText.text = "Duplicates found: " + Tasks_Completed.ToString();
         ResetButtons();
 
         GameObject obj = GameObject.Find("Scene Controller");
@@ -46,7 +46,7 @@ public class ButtonManager : MonoBehaviour
     void FixedUpdate()
     {
         minigameTimer += Time.fixedDeltaTime;
-        Debug.Log(minigameTimer);
+        //Debug.Log(minigameTimer);
         timerText.text = ((int)(31 - minigameTimer)).ToString();
     }
 
@@ -79,7 +79,7 @@ public class ButtonManager : MonoBehaviour
             rando2 = Random.Range(0, buttons.Length);
         } while (rando2 == rando1);
 
-        Debug.Log("The special buttons are buttons " + rando1 + " and " + rando2);
+        
 
         // Generate a unique dupe number that is NOT in generatedNumbers
         int dupeNumber;
@@ -91,6 +91,8 @@ public class ButtonManager : MonoBehaviour
         // Assign the same number to both dupe buttons
         buttons[rando1].GetComponentInChildren<TextMeshProUGUI>().text = dupeNumber.ToString();
         buttons[rando2].GetComponentInChildren<TextMeshProUGUI>().text = dupeNumber.ToString();
+        Debug.Log("Buttons " + (rando1 + 1) + " and " + (rando2 + 1) + " are both " + dupeNumber);
+
 
         // Mark these buttons as "dupe"
         buttons[rando1].GetComponent<ButtonScript>().IsDupe = true;
@@ -101,7 +103,7 @@ public class ButtonManager : MonoBehaviour
     {
         Debug.Log("You win this round!");
         Tasks_Completed ++;
-        ScoreText.text = Tasks_Completed.ToString();
+        ScoreText.text = "Duplicates found: " + Tasks_Completed.ToString();
         ResetButtons();
     }
     public void Lose()

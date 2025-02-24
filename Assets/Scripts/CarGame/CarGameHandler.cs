@@ -47,7 +47,7 @@ public class CarGameHandler : MonoBehaviour
             //do ending minigame stuffs here
             //go to next scene after time passes
             timerText.text = "YOU WIN!";
-            if (minigameTimer > minigameTime + 5)
+            if (minigameTimer > minigameTime + 1.5)
             {
                 print("SCENE TO LOAD: " + sceneControllerScript.NextScene);
                 sceneControllerScript.LoadSceneUnderstood();

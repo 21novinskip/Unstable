@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 public class ButtonManager : MonoBehaviour
 {
+
+    public float minigameTime;
+    private float minigameTimer = 0f;
+    public TMP_Text timerText;
+
     private int Tasks_Completed;
     public int CorrectButtons = 0;
     public TextMeshProUGUI ScoreText;
@@ -37,6 +42,14 @@ public class ButtonManager : MonoBehaviour
             Win();
         }
     }
+
+    void FixedUpdate()
+    {
+        minigameTimer += Time.fixedDeltaTime;
+        Debug.Log(minigameTimer);
+        timerText.text = ((int)(31 - minigameTimer)).ToString();
+    }
+
     void ResetButtons()
     {
         CorrectButtons = 0;

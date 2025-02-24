@@ -6,6 +6,11 @@ using System.Runtime.InteropServices.ComTypes;
 
 public class EmailManager : MonoBehaviour
 {
+
+    public float minigameTime;
+    private float minigameTimer = 0f;
+    public TMP_Text timerText;
+
     public float swipeSpeed = 10f; // Speed at which emails slide up
     public float swipeAwayThreshold = 3f; // Distance to swipe away
     private List<GameObject> emailList = new List<GameObject>(); // List of emails in the scene
@@ -73,6 +78,14 @@ public class EmailManager : MonoBehaviour
         GameObject obj = GameObject.Find("Scene Controller");
         SceneController command = obj.GetComponent<SceneController>();
         StartCoroutine(command.WaitThirty());
+    }
+
+
+    void FixedUpdate()
+    {
+        minigameTimer += Time.fixedDeltaTime;
+        Debug.Log(minigameTimer);
+        timerText.text = ((int)(31 - minigameTimer)).ToString();
     }
 
     void Update()

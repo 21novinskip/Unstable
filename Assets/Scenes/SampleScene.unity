@@ -393,7 +393,7 @@ MonoBehaviour:
     - character:
         name: Coworker
       line: "Alright, so you're going to be looking at the department spreadsheets
-        and figuring out what numbers are just white noise, and which ones are actually
+        and figuring out what numbers are just duplicates, and which ones are actually
         important. It\u2019s a lot of work, but you\u2019ll get the gist of it soon!
         Hang in there, buddy!"
   waiting: 0

@@ -36,7 +36,7 @@ public class CarGameHandler : MonoBehaviour
         {
             carInstructionsAlpha += 0.1f;
         }
-        else
+        else if ((minigameTimer >=2f) && (minigameTimer < 4f))
         {
             carInstructionsAlpha -= 0.1f;
         }

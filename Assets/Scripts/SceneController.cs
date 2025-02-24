@@ -369,7 +369,7 @@ public class SceneController : MonoBehaviour
     public IEnumerator WaitThirty()
     {
         // Wait for 30 seconds
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(33f);
 
         // Debug message after 30 seconds
         LoadSceneUnderstood();

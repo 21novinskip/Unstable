@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -54,15 +55,19 @@ public class ButtonManager : MonoBehaviour
     {
         minigameTimer += Time.fixedDeltaTime;
         //Debug.Log(minigameTimer);
-        timerText.text = ((int)(31 - minigameTimer)).ToString();
+        
 
         if (minigameTimer < 2f)
         {
             carInstructionsAlpha += 0.1f;
         }
-        else
+        else if ((minigameTimer >=2f) && (minigameTimer < 4f))
         {
             carInstructionsAlpha -= 0.1f;
+        }
+        else if (minigameTimer >= 4)
+        {
+            timerText.text = ((int)(35 - minigameTimer)).ToString();
         }
         Color startColor = carInstructions.color;
         carInstructions.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Clamp(carInstructionsAlpha, 0f, 1f));
@@ -70,6 +75,12 @@ public class ButtonManager : MonoBehaviour
 
     void ResetButtons()
     {
+
+        foreach (var button in buttons)
+        {
+            button.GetComponent<ButtonScript>().IsDupe = false;
+        }
+
         CorrectButtons = 0;
 
         // Create a list to keep track of unique numbers
@@ -115,6 +126,8 @@ public class ButtonManager : MonoBehaviour
         // Mark these buttons as "dupe"
         buttons[rando1].GetComponent<ButtonScript>().IsDupe = true;
         buttons[rando2].GetComponent<ButtonScript>().IsDupe = true;
+
+        DeselectAllButtons();
     }
 
     public void Win()
@@ -137,6 +150,13 @@ public class ButtonManager : MonoBehaviour
         int max = (int)Mathf.Pow(10, digits) - 1;  // Explicit cast to int
 
         return Random.Range(min, max + 1); // Generate random number in the specified range
+    }
+
+    public void DeselectAllButtons()
+    {
+        // Ensure no button is selected in EventSystem
+        EventSystem.current.SetSelectedGameObject(null);
+        Debug.Log("Deselcting buttons");
     }
 
 }

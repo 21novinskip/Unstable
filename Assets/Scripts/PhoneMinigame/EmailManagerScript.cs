@@ -69,25 +69,6 @@ public class EmailManager : MonoBehaviour
                 AssignRandomTitle(emailScript);
             }
         }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        emailList = emailList.OrderByDescending(x => x.transform.position.y).ToList();
-=======
-
-        GameObject obj = GameObject.Find("Scene Controller");
-        SceneController command = obj.GetComponent<SceneController>();
-        StartCoroutine(command.WaitThirty());
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
-        GameObject obj = GameObject.Find("Scene Controller");
-        SceneController command = obj.GetComponent<SceneController>();
-        StartCoroutine(command.WaitThirty());
-
-        GameObject obj = GameObject.Find("Scene Controller");
-        SceneController command = obj.GetComponent<SceneController>();
-        StartCoroutine(command.WaitThirty());
 
         GameObject obj = GameObject.Find("Scene Controller");
         SceneController command = obj.GetComponent<SceneController>();

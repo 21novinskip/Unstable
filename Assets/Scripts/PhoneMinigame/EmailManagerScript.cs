@@ -88,6 +88,10 @@ public class EmailManager : MonoBehaviour
         GameObject obj = GameObject.Find("Scene Controller");
         SceneController command = obj.GetComponent<SceneController>();
         StartCoroutine(command.WaitThirty());
+
+        GameObject obj = GameObject.Find("Scene Controller");
+        SceneController command = obj.GetComponent<SceneController>();
+        StartCoroutine(command.WaitThirty());
     }
 
     void Update()

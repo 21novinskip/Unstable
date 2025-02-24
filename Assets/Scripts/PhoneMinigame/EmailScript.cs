@@ -69,7 +69,7 @@ public class EmailScript : MonoBehaviour
         if (Input.GetMouseButton(0) && IsMouseOverUI()) 
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-            transform.position = new Vector3(mousePos.x, startPos.y, startPos.z);
+            transform.position = new Vector3(mousePos.x, transform.position.y, startPos.z);
         }
         else //if not being dragged
         {
@@ -78,8 +78,11 @@ public class EmailScript : MonoBehaviour
             {
                 if (!isSwipingAway) //if not swiping yet, start lol
                 {
+                    Vector3 swipePos = startPos;
+                    swipePos.y = transform.position.y;
                     float direction = Mathf.Sign(distanceDragged); //figure out if going left or right
                     swipeTarget = startPos + new Vector3(direction * swipeAwayThreshold*2f, 0, 0); //make a target
+                    swipeTarget.y = transform.position.y;
                     isSwipingAway = true;
                 }
             }
